@@ -69,7 +69,6 @@ class ParseJsonTest {
  }}
         """.trimIndent()
         val gagJson = Json { ignoreUnknownKeys=true }.decodeFromString<GagJson>(jsonInput)
-//        val gagJson = jsonb.fromJson(jsonInput, GagJson::class.java)
         Assertions.assertNotNull(gagJson.data)
     }
 

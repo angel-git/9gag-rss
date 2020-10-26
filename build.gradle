@@ -22,6 +22,7 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
+    jcenter()
 }
 
 
@@ -40,6 +41,7 @@ dependencies {
     implementation('org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10') { force=true}
     implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10') { force=true}
     implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10') { force=true}
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.11.3'
     implementation 'org.brotli:dec:0.1.2'
     implementation 'io.quarkus:quarkus-arc'
     testImplementation 'io.quarkus:quarkus-junit5'

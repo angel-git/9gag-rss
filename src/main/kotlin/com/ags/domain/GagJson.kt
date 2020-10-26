@@ -34,5 +34,7 @@ data class GagJsonPhotoImage(
 
 @Serializable
 data class GagJsonAnimatedImage(
-        val vp9Url: String
+        val vp9Url: String? = null,
+        val vp8Url: String? = null,
+        val h265Url: String? = null,
 )

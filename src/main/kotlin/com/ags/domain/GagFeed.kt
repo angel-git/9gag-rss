@@ -1,8 +1,10 @@
 package com.ags.domain
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import kotlinx.serialization.Serializable
 
-@Serializable
+@JacksonXmlRootElement(localName = "rss")
 data class Rss(
     val channel: Channel
 )
@@ -18,8 +20,11 @@ data class Channel(
 @Serializable
 data class Item(
         val guid: String,
-        val author: String = "noreply@9gag-rss.com",
-        val description: String
+        val title: String,
+        val author: String = "9gag",
+        @get: [JacksonXmlCData]
+        val description: String,
+        val link: String,
 )
 
 
