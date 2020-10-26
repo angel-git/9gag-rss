@@ -28,11 +28,11 @@ class GagClient {
             .version(HttpClient.Version.HTTP_2)
             .build()
 
-    private val url = "https://9gag.com/v1/group-posts/group/nsfw/type/fresh"
+    private fun url(group: String) = "https://9gag.com/v1/group-posts/group/$group/type/fresh"
 
-    fun get9GagJson(): CompletableFuture<GagJson>? {
+    fun get9GagJson(group: String): CompletableFuture<GagJson>? {
         return httpClient.sendAsync(
-                HttpRequest.newBuilder().GET().uri(URI.create(url))
+                HttpRequest.newBuilder().GET().uri(URI.create(url(group)))
                         .header("Cookie","__cfduid=d4c4bfc44826d9a80c77561e5428abc591603692951; ____ri=4775; ____lo=NL")
                         .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
                         .header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15")

@@ -65,7 +65,17 @@ class ParseJsonTest {
         },
         "tags": []
       }
-      ]
+    ],
+    "group": {
+      "name": "NSFW",
+      "url": "nsfw",
+      "description": "Not Safe For Work. No sexually explicit content.",
+      "ogImageUrl": "https:\/\/miscmedia-9gag-fun.9cache.com\/images\/thumbnail-facebook\/1557297099.4728_VeSAvU_100x100.jpg",
+      "ogWebpUrl": "https:\/\/miscmedia-9gag-fun.9cache.com\/images\/thumbnail-facebook\/1557297099.4728_VeSAvU_100x100wp.webp",
+      "userUploadEnabled": true,
+      "isSensitive": true,
+      "location": ""
+    }
  }}
         """.trimIndent()
         val gagJson = Json { ignoreUnknownKeys=true }.decodeFromString<GagJson>(jsonInput)

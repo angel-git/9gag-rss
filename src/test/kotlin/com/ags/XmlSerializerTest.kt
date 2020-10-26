@@ -13,9 +13,9 @@ class XmlSerializerTest {
     private val expected: String = """
         <rss>
           <channel>
-            <title>9GAG - NSFW - ags</title>
-            <link>https://9gag.com/nsfw</link>
-            <description>9GAG - NSFW</description>
+            <title>9GAG - comic - ags</title>
+            <link>https://9gag.com</link>
+            <description>description comic</description>
             <item>
               <guid>id1</guid>
               <title>title1</title>
@@ -39,10 +39,13 @@ class XmlSerializerTest {
     @Test
     fun `should create RSS xml compatible`() {
 
-        val gagJson = GagJson(GagData(posts = arrayOf(
-                GagPost("id1", "url1", "title1", "Animated", images = GagJsonImages(image460sv = GagJsonAnimatedImage("vp9url"), image700 = GagJsonPhotoImage("url1"))),
-                GagPost("id2", "url2", "title2", "Photo", images = GagJsonImages(image460sv = null, image700 = GagJsonPhotoImage("url2"))),
-        )))
+        val gagJson = GagJson(
+                GagData(
+                        posts = arrayOf(
+                                GagPost("id1", "url1", "title1", "Animated", images = GagJsonImages(image460sv = GagJsonAnimatedImage("vp9url"), image700 = GagJsonPhotoImage("url1"))),
+                                GagPost("id2", "url2", "title2", "Photo", images = GagJsonImages(image460sv = null, image700 = GagJsonPhotoImage("url2")))),
+                        group = GagGroup("comic", "description comic")
+                ))
         val feed: Rss = GagToAtom().apply(gagJson)
 
 
@@ -54,10 +57,13 @@ class XmlSerializerTest {
 
     @Test
     fun `should mp4 take preference over other`() {
-        val gagJson = GagJson(GagData(posts = arrayOf(
-                GagPost("id1", "url1", "title1", "Animated", images = GagJsonImages(image460sv = GagJsonAnimatedImage("vp9url", h265Url = "h265Url"), image700 = GagJsonPhotoImage("url1"))),
-                GagPost("id2", "url2", "title2", "Photo", images = GagJsonImages(image460sv = null, image700 = GagJsonPhotoImage("url2"))),
-        )))
+        val gagJson = GagJson(
+                GagData(
+                        posts = arrayOf(
+                                GagPost("id1", "url1", "title1", "Animated", images = GagJsonImages(image460sv = GagJsonAnimatedImage("vp9url", h265Url = "h265Url"), image700 = GagJsonPhotoImage("url1"))),
+                                GagPost("id2", "url2", "title2", "Photo", images = GagJsonImages(image460sv = null, image700 = GagJsonPhotoImage("url2")))),
+                        group = GagGroup("comic", "description comic")
+                ))
         val feed: Rss = GagToAtom().apply(gagJson)
 
         Assertions.assertTrue(feed.channel.item[0].description.contains("h265Url"))

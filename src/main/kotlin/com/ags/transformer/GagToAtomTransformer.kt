@@ -11,8 +11,9 @@ class GagToAtom : Function<GagJson, Rss> {
     override fun apply(input: GagJson): Rss {
 
         val items: List<Item> = input.data.posts.map { GagPostToItem().apply(it) }
-
-        return Rss(Channel("9GAG - NSFW - ags", "https://9gag.com/nsfw", "9GAG - NSFW", item = items))
+        val group = input.data.group.name
+        val description = input.data.group.description
+        return Rss(Channel("9GAG - $group - ags", "https://9gag.com", description, item = items))
     }
 }
 

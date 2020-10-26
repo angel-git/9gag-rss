@@ -4,12 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GagJson(
-    val data: GagData,
+        val data: GagData,
 )
 
 @Serializable
 data class GagData(
-        val posts: Array<GagPost>
+        val posts: Array<GagPost>,
+        val group: GagGroup,
 )
 
 @Serializable
@@ -37,4 +38,10 @@ data class GagJsonAnimatedImage(
         val vp9Url: String? = null,
         val vp8Url: String? = null,
         val h265Url: String? = null,
+)
+
+@Serializable
+data class GagGroup(
+        val name: String,
+        val description: String,
 )
