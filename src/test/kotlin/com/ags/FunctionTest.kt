@@ -18,10 +18,9 @@ class FunctionTest {
         )))
         val feed = GagToAtom().apply(gagJson)
         Assertions.assertEquals(feed.channel.item[0].guid, "id1")
-        Assertions.assertEquals(feed.channel.item[0].description, "vp9url")
+        Assertions.assertTrue(feed.channel.item[0].description.contains("vp9url"))
         Assertions.assertEquals(feed.channel.item[1].guid, "id2")
-        Assertions.assertEquals(feed.channel.item[1].description, "url2")
-
+        Assertions.assertTrue(feed.channel.item[1].description.contains("url2"))
     }
 
 }

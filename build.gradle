@@ -1,22 +1,8 @@
-buildscript {
-    ext.experimentalsEnabled = ["-progressive", "-Xuse-experimental=kotlin.Experimental",
-                                "-Xuse-experimental=kotlin.ExperimentalMultiplatform",
-                                "-Xuse-experimental=kotlinx.serialization.InternalSerializationApi"
-    ]
-
-    ext.experimentalsInTestEnabled = ["-progressive", "-Xuse-experimental=kotlin.Experimental",
-                                      "-Xuse-experimental=kotlin.ExperimentalMultiplatform",
-                                      "-Xuse-experimental=kotlinx.serialization.ExperimentalSerializationApi",
-                                      "-Xuse-experimental=kotlinx.serialization.InternalSerializationApi",
-                                      "-Xuse-experimental=kotlin.ExperimentalUnsignedTypes"
-    ]
-}
-
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version "1.4.10"
-    id "org.jetbrains.kotlin.plugin.allopen" version "1.4.10"
+    id 'org.jetbrains.kotlin.jvm' version "1.4.0"
+    id "org.jetbrains.kotlin.plugin.allopen" version "1.4.0"
     id 'io.quarkus'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.10'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.0'
 }
 
 repositories {
@@ -25,10 +11,11 @@ repositories {
     jcenter()
 }
 
-
-
 dependencies {
-    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-common'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
     implementation 'io.quarkus:quarkus-kotlin'
     implementation 'io.quarkus:quarkus-scheduler'
     implementation 'io.quarkus:quarkus-resteasy'
@@ -36,11 +23,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0'
 //    override the ones from quarkus
-    implementation('org.jetbrains.kotlin:kotlin-reflect:1.4.10') { force=true}
-    implementation('org.jetbrains.kotlin:kotlin-stdlib:1.4.10') { force=true}
-    implementation('org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10') { force=true}
-    implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10') { force=true}
-    implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10') { force=true}
+    implementation('org.jetbrains.kotlin:kotlin-stdlib:1.4.0'){ force=true}
+    implementation('org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0'){ force=true}
+    implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0') { force=true}
+    implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0') { force=true}
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.11.3'
     implementation 'org.brotli:dec:0.1.2'
     implementation 'io.quarkus:quarkus-arc'
