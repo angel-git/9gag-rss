@@ -15,22 +15,22 @@ data class GagData(
 
 @Serializable
 data class GagPost(
-        val id: String,
-        val url: String,
-        val title: String,
-        val type: String, // Animated, Photo
-        val images: GagJsonImages
+        val id: String = "",
+        val url: String = "",
+        val title: String = "",
+        val type: String = "", // Animated, Photo
+        val images: GagJsonImages = GagJsonImages(image700 = GagJsonPhotoImage(""))
 )
 
 @Serializable
 data class GagJsonImages(
-        val image700: GagJsonPhotoImage,
+        val image700: GagJsonPhotoImage = GagJsonPhotoImage(""),
         val image460sv: GagJsonAnimatedImage? = null
 )
 
 @Serializable
 data class GagJsonPhotoImage(
-        val url: String
+        val url: String = ""
 )
 
 @Serializable
