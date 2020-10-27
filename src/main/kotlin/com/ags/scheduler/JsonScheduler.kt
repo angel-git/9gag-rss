@@ -23,6 +23,12 @@ class JsonScheduler(val client: GagClient, val repository: FeedRepository) {
         }
     }
 
+    @Scheduled(every = "12h")
+    fun deleteOldData() {
+        logger.info("going to delete old posts")
+        repository.deleteDayOldPosts()
+    }
+
     private fun fetchRss(group: String): GagJson {
         val json = client.get9GagJson(group)?.get()!!
         logger.info("Refreshed RSS from 9gag $group, found ${json.data.posts.size} posts")

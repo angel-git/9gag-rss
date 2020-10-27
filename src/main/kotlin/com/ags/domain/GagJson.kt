@@ -1,6 +1,7 @@
 package com.ags.domain
 
 import kotlinx.serialization.Serializable
+import java.util.*
 
 @Serializable
 data class GagJson(
@@ -19,7 +20,8 @@ data class GagPost(
         val url: String = "",
         val title: String = "",
         val type: String = "", // Animated, Photo
-        val images: GagJsonImages = GagJsonImages(image700 = GagJsonPhotoImage(""))
+        val images: GagJsonImages = GagJsonImages(image700 = GagJsonPhotoImage("")),
+        val createdOn: Long = Date().time
 )
 
 @Serializable
