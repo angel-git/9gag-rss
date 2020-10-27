@@ -2,6 +2,7 @@ package com.ags.scheduler
 
 import com.ags.client.GagClient
 import com.ags.domain.GagJson
+import com.ags.domain.SupportedGroups
 import com.ags.repository.FeedRepository
 import io.quarkus.scheduler.Scheduled
 import org.slf4j.LoggerFactory
@@ -12,14 +13,11 @@ class JsonScheduler(val client: GagClient, val repository: FeedRepository) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    // TODO move this away from here
-    private val groupsSupported = listOf("nsfw", "comic")
-
     @Scheduled(every = "300s")
     fun getMeSomeJson() {
         logger.info("Refreshing RSS from 9gag")
-        groupsSupported.forEach {
-            repository.add(it, fetchRss(it))
+        SupportedGroups.values().forEach {
+            repository.add(it.group, fetchRss(it.group))
         }
     }
 

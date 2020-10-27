@@ -26,10 +26,7 @@ class FeedRepository {
 
     fun read(group: String): GagJson {
         val querySnapshot = db.collection(group).get().get().documents
-        val posts = querySnapshot.map {
-            it.toObject(GagPost::class.java)
-        }.toTypedArray()
-
+        val posts = querySnapshot.map { it.toObject(GagPost::class.java) }.toTypedArray()
         return GagJson(GagData(posts, GagGroup(group, "fake description")))
     }
 

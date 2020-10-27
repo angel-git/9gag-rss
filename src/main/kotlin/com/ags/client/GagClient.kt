@@ -1,6 +1,8 @@
 package com.ags.client
 
+import com.ags.domain.GagGroup
 import com.ags.domain.GagJson
+import com.ags.domain.SupportedGroups
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.brotli.dec.BrotliInputStream
@@ -33,7 +35,7 @@ class GagClient {
     fun get9GagJson(group: String): CompletableFuture<GagJson>? {
         return httpClient.sendAsync(
                 HttpRequest.newBuilder().GET().uri(URI.create(url(group)))
-                        .header("Cookie","__cfduid=d4c4bfc44826d9a80c77561e5428abc591603692951; ____ri=4775; ____lo=NL")
+                        .header("Cookie", "__cfduid=d4c4bfc44826d9a80c77561e5428abc591603692951; ____ri=4775; ____lo=NL")
                         .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
                         .header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15")
                         .header("Accept-Language", "en-us")
@@ -42,7 +44,14 @@ class GagClient {
                 HttpResponse.BodyHandlers.ofByteArray())
                 .thenApply { decompress(it.body(), false) }
                 .thenApply { String(it) }
-                .thenApply { Json { ignoreUnknownKeys=true }.decodeFromString<GagJson>(it) }
+                .thenApply { Json { ignoreUnknownKeys = true }.decodeFromString<GagJson>(it) }
+                .thenApply {
+                    // fresh topics from default don't have group
+                    if (group == SupportedGroups.FRESH.group) {
+                        it.data.group = GagGroup("fresh", "fresh")
+                    }
+                    it
+                }
                 .toCompletableFuture()
 
     }

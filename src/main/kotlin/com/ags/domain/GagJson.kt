@@ -11,7 +11,7 @@ data class GagJson(
 @Serializable
 data class GagData(
         val posts: Array<GagPost>,
-        val group: GagGroup,
+        var group: GagGroup? = null,
 )
 
 @Serializable

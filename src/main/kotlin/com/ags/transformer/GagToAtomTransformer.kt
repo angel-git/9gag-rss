@@ -11,8 +11,8 @@ class GagToAtom : Function<GagJson, Rss> {
     override fun apply(input: GagJson): Rss {
 
         val items: List<Item> = input.data.posts.map { GagPostToItem().apply(it) }
-        val group = input.data.group.name
-        val description = input.data.group.description
+        val group = input.data.group!!.name
+        val description = input.data.group!!.description
         return Rss(Channel("9GAG - $group - ags", "https://9gag.com", description, item = items))
     }
 }
@@ -37,21 +37,30 @@ class GagPostToItem : Function<GagPost, Item> {
         val description = when {
             input.type.equals("Animated") -> {
                 val (videoUrl, contentType) =
-                        if (input.images.image460sv == null) {
-                            throw IllegalStateException("Can't parse ${input.images}")
-                        } else if (input.images.image460sv.h265Url != null) {
-                            Pair(input.images.image460sv.h265Url, "video/mp4")
-                        } else if (input.images.image460sv.vp9Url != null) {
-                            Pair(input.images.image460sv.vp9Url, "video/webm")
-                        } else if (input.images.image460sv.vp8Url != null) {
-                            Pair(input.images.image460sv.vp8Url, "video/webm")
-                        } else {
-                            throw IllegalStateException("Can't parse ${input.images.image460sv}")
+                        when {
+                            input.images.image460sv == null -> {
+                                throw IllegalStateException("Can't parse ${input.images}")
+                            }
+                            input.images.image460sv.h265Url != null -> {
+                                Pair(input.images.image460sv.h265Url, "video/mp4")
+                            }
+                            input.images.image460sv.vp9Url != null -> {
+                                Pair(input.images.image460sv.vp9Url, "video/webm")
+                            }
+                            input.images.image460sv.vp8Url != null -> {
+                                Pair(input.images.image460sv.vp8Url, "video/webm")
+                            }
+                            else -> {
+                                throw IllegalStateException("Can't parse ${input.images.image460sv}")
+                            }
                         }
                 parseVideoTag(input.images.image700.url, videoUrl, contentType)
             }
             input.type.equals("Photo") -> {
                 parserImageTag(input.images.image700.url)
+            }
+            input.type.equals("Video") -> {
+                "Videos are not implemented yet"
             }
             else -> {
                 throw IllegalStateException("Can't parse ${input.type}")
