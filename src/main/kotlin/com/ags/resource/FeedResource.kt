@@ -25,6 +25,7 @@ class FeedResource(val scheduler: JsonScheduler, val repository: FeedRepository)
         if (!supportedGroups.contains(group)) {
             throw IllegalArgumentException("You only only subscribe to $supportedGroups but you sent [$group]")
         }
+        // TODO use jackson serializer and return RSS instead of string
         return rssToString.toXml(
                 gagToAtom.apply(repository.read(group))
         )
