@@ -32,8 +32,11 @@ dependencies {
     implementation 'io.quarkus:quarkus-arc'
     // database
     implementation 'com.google.cloud:google-cloud-firestore:2.1.0'
+    //test
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
+    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.4.2'
+    testImplementation 'io.kotlintest:kotlintest:2.0.7'
 }
 
 group 'com.ags'
@@ -65,4 +68,8 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11
+}
+
+test {
+    useJUnitPlatform()
 }

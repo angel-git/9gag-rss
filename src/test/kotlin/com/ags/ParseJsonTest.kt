@@ -1,13 +1,11 @@
 package com.ags
 
 import com.ags.domain.GagJson
-import io.quarkus.test.junit.QuarkusTest
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-@QuarkusTest
 class ParseJsonTest {
 
     @Test

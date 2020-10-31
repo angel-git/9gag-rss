@@ -2,11 +2,9 @@ package com.ags
 
 import com.ags.domain.*
 import com.ags.transformer.GagToAtom
-import io.quarkus.test.junit.QuarkusTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-@QuarkusTest
 class FunctionTest {
 
     @Test
