@@ -9,7 +9,13 @@ but nowadays it doesn't contain videos anymore. This one does.
 
 ## Limitations
 
-You can only subscribe to `default` (which is the fresh page), `comic` and `nsfw`. Feel free to add more.
+You can only subscribe to:
+- `default` (which is the fresh page)
+- `comic`
+- `nsfw`
+- `among-us`
+
+Feel free to create PR and add more!
 This project is not yet battle tested, so they might be few bugs.
 
 Also is not available so far in any domain, so you will have to host it yourself. 
@@ -67,6 +73,6 @@ gcloud app deploy build/9gag-rss-1.0.0-SNAPSHOT-runner.jar
 
 ## How to subscribe
 
-Once the application is running you can get the RSS feed from `your_domain/feed/[default|comic|nsfw]`.
+Once the application is running you can get the RSS feed from `your_domain/feed/[default|comic|...]`.
 
 The feeds are updated every 5 minutes and the database doesn't contain posts older than 1 day (so Google Cloud won't charge us!).
