@@ -1,5 +1,7 @@
 # 9gag rss
 
+![Build and Test](https://github.com/angel-git/9gag-rss/workflows/Build%20and%20Test/badge.svg?branch=master)
+
 ## Motivation
 
 There are already few alternatives to get RSS from 9gag, such as [gag-rss.com](https://9gag-rss.com/) (which I totally recommend)
