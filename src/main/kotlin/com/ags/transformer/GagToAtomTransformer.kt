@@ -34,8 +34,8 @@ class GagPostToItem : Function<GagPost, Item> {
     }
 
     override fun apply(input: GagPost): Item {
-        val description = when {
-            input.type.equals("Animated") -> {
+        val description = when (input.type) {
+            "Animated" -> {
                 val (videoUrl, contentType) =
                         when {
                             input.images.image460sv == null -> {
@@ -56,10 +56,10 @@ class GagPostToItem : Function<GagPost, Item> {
                         }
                 parseVideoTag(input.images.image700.url, videoUrl, contentType)
             }
-            input.type.equals("Photo") -> {
+            "Photo", "Article" -> {
                 parserImageTag(input.images.image700.url)
             }
-            input.type.equals("Video") -> {
+            "Video" -> {
                 "Videos are not implemented yet"
             }
             else -> {
