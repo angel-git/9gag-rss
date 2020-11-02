@@ -3,8 +3,7 @@ package com.ags.client
 import com.ags.domain.GagGroup
 import com.ags.domain.GagJson
 import com.ags.domain.SupportedGroups
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
 import org.brotli.dec.BrotliInputStream
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -44,7 +43,7 @@ class GagClient {
                 HttpResponse.BodyHandlers.ofByteArray())
                 .thenApply { decompress(it.body(), false) }
                 .thenApply { String(it) }
-                .thenApply { Json { ignoreUnknownKeys = true }.decodeFromString<GagJson>(it) }
+                .thenApply { Gson().fromJson(it, GagJson::class.java) } // can't use kotlinx.serialization.json.Json in native
                 .thenApply {
                     // fresh topics from default don't have group
                     if (group == SupportedGroups.FRESH.group) {

@@ -1,49 +1,50 @@
 package com.ags.domain
 
-import kotlinx.serialization.Serializable
+import io.quarkus.runtime.annotations.RegisterForReflection
 import java.util.*
 
-@Serializable
+// all data classes here need to be `var` so it works on native mode :(
+@RegisterForReflection
 data class GagJson(
-        val data: GagData,
+        var data: GagData,
 )
 
-@Serializable
+@RegisterForReflection
 data class GagData(
-        val posts: Array<GagPost>,
+        var posts: Array<GagPost>,
         var group: GagGroup? = null,
 )
 
-@Serializable
+@RegisterForReflection
 data class GagPost(
-        val id: String = "",
-        val url: String = "",
-        val title: String = "",
-        val type: String = "", // Animated, Photo
-        val images: GagJsonImages = GagJsonImages(image700 = GagJsonPhotoImage("")),
-        val createdOn: Long = Date().time
+        var id: String = "",
+        var url: String = "",
+        var title: String = "",
+        var type: String = "", // Animated, Photo
+        var images: GagJsonImages = GagJsonImages(image700 = GagJsonPhotoImage("")),
+        var createdOn: Long = Date().time
 )
 
-@Serializable
+@RegisterForReflection
 data class GagJsonImages(
-        val image700: GagJsonPhotoImage = GagJsonPhotoImage(""),
-        val image460sv: GagJsonAnimatedImage? = null
+        var image700: GagJsonPhotoImage = GagJsonPhotoImage(""),
+        var image460sv: GagJsonAnimatedImage? = null
 )
 
-@Serializable
+@RegisterForReflection
 data class GagJsonPhotoImage(
-        val url: String = ""
+        var url: String = ""
 )
 
-@Serializable
+@RegisterForReflection
 data class GagJsonAnimatedImage(
-        val vp9Url: String? = null,
-        val vp8Url: String? = null,
-        val h265Url: String? = null,
+        var vp9Url: String? = null,
+        var vp8Url: String? = null,
+        var h265Url: String? = null,
 )
 
-@Serializable
+@RegisterForReflection
 data class GagGroup(
-        val name: String,
-        val description: String,
+        var name: String,
+        var description: String,
 )

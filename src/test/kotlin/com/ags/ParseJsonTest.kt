@@ -1,8 +1,7 @@
 package com.ags
 
 import com.ags.domain.GagJson
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -76,7 +75,7 @@ class ParseJsonTest {
     }
  }}
         """.trimIndent()
-        val gagJson = Json { ignoreUnknownKeys=true }.decodeFromString<GagJson>(jsonInput)
+        val gagJson = Gson().fromJson(jsonInput, GagJson::class.java)
         Assertions.assertNotNull(gagJson.data)
     }
 

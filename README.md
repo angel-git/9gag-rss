@@ -71,6 +71,9 @@ Once the application is built and your `gcloud` is installed you can run the fol
 gcloud app deploy build/9gag-rss-1.0.0-SNAPSHOT-runner.jar
 ```
 
+Alternative there is a nice explanation [here](https://quarkify.net/how-to-deploy-quarkus-on-google-app-engine/)
+and for [native](https://medium.com/@alexismp/deploying-a-quarkus-app-to-google-cloud-run-c4a8ca3be526)
+
 ## How to subscribe
 
 Once the application is running you can get the RSS feed from `your_domain/feed/[default|comic|...]`.

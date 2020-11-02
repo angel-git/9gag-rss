@@ -41,20 +41,20 @@ class GagPostToItem : Function<GagPost, Item> {
                             input.images.image460sv == null -> {
                                 throw IllegalStateException("Can't parse ${input.images}")
                             }
-                            input.images.image460sv.h265Url != null -> {
-                                Pair(input.images.image460sv.h265Url, "video/mp4")
+                            input.images.image460sv!!.h265Url != null -> {
+                                Pair(input.images.image460sv!!.h265Url, "video/mp4")
                             }
-                            input.images.image460sv.vp9Url != null -> {
-                                Pair(input.images.image460sv.vp9Url, "video/webm")
+                            input.images.image460sv!!.vp9Url != null -> {
+                                Pair(input.images.image460sv!!.vp9Url, "video/webm")
                             }
-                            input.images.image460sv.vp8Url != null -> {
-                                Pair(input.images.image460sv.vp8Url, "video/webm")
+                            input.images.image460sv!!.vp8Url != null -> {
+                                Pair(input.images.image460sv!!.vp8Url, "video/webm")
                             }
                             else -> {
                                 throw IllegalStateException("Can't parse ${input.images.image460sv}")
                             }
                         }
-                parseVideoTag(input.images.image700.url, videoUrl, contentType)
+                parseVideoTag(input.images.image700.url, videoUrl!!, contentType)
             }
             "Photo", "Article" -> {
                 parserImageTag(input.images.image700.url)

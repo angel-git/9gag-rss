@@ -2,14 +2,17 @@ package com.ags.domain
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import io.quarkus.runtime.annotations.RegisterForReflection
 import kotlinx.serialization.Serializable
 
 @JacksonXmlRootElement(localName = "rss")
+@RegisterForReflection
 data class Rss(
     val channel: Channel
 )
 
 @Serializable
+@RegisterForReflection
 data class Channel(
         val title: String,
         val link: String,
@@ -18,6 +21,7 @@ data class Channel(
 )
 
 @Serializable
+@RegisterForReflection
 data class Item(
         val guid: String,
         val title: String,
