@@ -1,9 +1,17 @@
 package com.ags.transformer
 
 import com.ags.domain.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 interface Function<A, B> {
     fun apply(input: A): B
+}
+
+private fun parseCreationTsToRF(dateTs: Long): String {
+    val dateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz")
+    dateFormat.timeZone = TimeZone.getTimeZone("GMT")
+    return dateFormat.format(Date(dateTs.times(1000)))
 }
 
 class GagToAtom : Function<GagJson, Rss> {
@@ -13,7 +21,7 @@ class GagToAtom : Function<GagJson, Rss> {
         val items: List<Item> = input.data.posts.map { GagPostToItem().apply(it) }
         val group = input.data.group!!.name
         val description = input.data.group!!.description
-        return Rss(Channel("9GAG - $group - ags", "https://9gag.com", description, item = items))
+        return Rss(Channel("9GAG - $group - ags", "https://9gag.com", description, item = items, pubDate = parseCreationTsToRF(input.data.posts[0].creationTs)))
     }
 }
 
@@ -66,7 +74,7 @@ class GagPostToItem : Function<GagPost, Item> {
                 throw IllegalStateException("Can't parse ${input.type}")
             }
         }
-        return Item(guid = input.id, description = description, title = input.title, link = input.url)
+        return Item(guid = input.id, description = description, title = input.title, link = input.url, pubDate = parseCreationTsToRF(input.creationTs))
     }
 }
 

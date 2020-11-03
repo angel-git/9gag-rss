@@ -15,6 +15,7 @@ class XmlSerializerTest {
             <title>9GAG - comic - ags</title>
             <link>https://9gag.com</link>
             <description>description comic</description>
+            <pubDate>Tue, 03 Nov 2020 04:34:21 GMT</pubDate>
             <item>
               <guid>id1</guid>
               <title>title1</title>
@@ -23,6 +24,7 @@ class XmlSerializerTest {
     <source src="vp9url" type="video/webm">
 </video>]]></description>
               <link>url1</link>
+              <pubDate>Tue, 03 Nov 2020 04:34:21 GMT</pubDate>
             </item>
             <item>
               <guid>id2</guid>
@@ -30,6 +32,7 @@ class XmlSerializerTest {
               <author>9gag</author>
               <description><![CDATA[<img src="url2" />]]></description>
               <link>url2</link>
+              <pubDate>Tue, 03 Nov 2020 04:02:13 GMT</pubDate>
             </item>
           </channel>
         </rss>"""
@@ -41,8 +44,8 @@ class XmlSerializerTest {
         val gagJson = GagJson(
                 GagData(
                         posts = arrayOf(
-                                GagPost("id1", "url1", "title1", "Animated", images = GagJsonImages(image460sv = GagJsonAnimatedImage("vp9url"), image700 = GagJsonPhotoImage("url1"))),
-                                GagPost("id2", "url2", "title2", "Photo", images = GagJsonImages(image460sv = null, image700 = GagJsonPhotoImage("url2")))),
+                                GagPost("id1", "url1", "title1", "Animated", creationTs = 1604378061, images = GagJsonImages(image460sv = GagJsonAnimatedImage("vp9url"), image700 = GagJsonPhotoImage("url1"))),
+                                GagPost("id2", "url2", "title2", "Photo", creationTs = 1604376133, images = GagJsonImages(image460sv = null, image700 = GagJsonPhotoImage("url2")))),
                         group = GagGroup("comic", "description comic")
                 ))
         val feed: Rss = GagToAtom().apply(gagJson)
@@ -59,8 +62,8 @@ class XmlSerializerTest {
         val gagJson = GagJson(
                 GagData(
                         posts = arrayOf(
-                                GagPost("id1", "url1", "title1", "Animated", images = GagJsonImages(image460sv = GagJsonAnimatedImage("vp9url", h265Url = "h265Url"), image700 = GagJsonPhotoImage("url1"))),
-                                GagPost("id2", "url2", "title2", "Photo", images = GagJsonImages(image460sv = null, image700 = GagJsonPhotoImage("url2")))),
+                                GagPost("id1", "url1", "title1", "Animated", creationTs = 1604378061, images = GagJsonImages(image460sv = GagJsonAnimatedImage("vp9url", h265Url = "h265Url"), image700 = GagJsonPhotoImage("url1"))),
+                                GagPost("id2", "url2", "title2", "Photo", creationTs = 1604376133, images = GagJsonImages(image460sv = null, image700 = GagJsonPhotoImage("url2")))),
                         group = GagGroup("comic", "description comic")
                 ))
         val feed: Rss = GagToAtom().apply(gagJson)

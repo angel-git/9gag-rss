@@ -22,6 +22,7 @@ data class GagPost(
         var title: String = "",
         var type: String = "", // Animated, Photo
         var images: GagJsonImages = GagJsonImages(image700 = GagJsonPhotoImage("")),
+        var creationTs: Long = 0,
         var createdOn: Long = Date().time
 )
 

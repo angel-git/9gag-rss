@@ -6,6 +6,7 @@ import com.ags.domain.GagJson
 import com.ags.domain.GagPost
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.FirestoreOptions
+import com.google.cloud.firestore.Query
 import org.slf4j.LoggerFactory
 import java.util.*
 import javax.enterprise.context.ApplicationScoped
@@ -25,7 +26,7 @@ class FeedRepository {
     }
 
     fun read(group: String): GagJson {
-        val querySnapshot = db.collection(group).get().get().documents
+        val querySnapshot = db.collection(group).orderBy("creationTs", Query.Direction.DESCENDING).get().get().documents
         val posts = querySnapshot.map { it.toObject(GagPost::class.java) }.toTypedArray()
         return GagJson(GagData(posts, GagGroup(group, "fake description")))
     }

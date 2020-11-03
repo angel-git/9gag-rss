@@ -17,7 +17,8 @@ data class Channel(
         val title: String,
         val link: String,
         val description: String,
-        val item: List<Item>,
+        val pubDate: String,
+        val item: List<Item>
 )
 
 @Serializable
@@ -29,6 +30,7 @@ data class Item(
         @get: [JacksonXmlCData]
         val description: String,
         val link: String,
+        val pubDate: String
 )
 
 
