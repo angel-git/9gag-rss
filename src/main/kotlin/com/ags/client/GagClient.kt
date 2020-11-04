@@ -29,7 +29,7 @@ class GagClient {
             .version(HttpClient.Version.HTTP_2)
             .build()
 
-    private fun url(group: String) = "https://9gag.com/v1/group-posts/group/$group/type/fresh"
+    private fun url(group: String) = "https://9gag.com/v1/group-posts/group/$group/type/hot"
 
     fun get9GagJson(group: String): CompletableFuture<GagJson>? {
         return httpClient.sendAsync(
@@ -46,8 +46,8 @@ class GagClient {
                 .thenApply { Gson().fromJson(it, GagJson::class.java) } // can't use kotlinx.serialization.json.Json in native
                 .thenApply {
                     // fresh topics from default don't have group
-                    if (group == SupportedGroups.FRESH.group) {
-                        it.data.group = GagGroup("fresh", "fresh")
+                    if (group == SupportedGroups.DEFAULT.group) {
+                        it.data.group = GagGroup("hot - default", "what's been getting a lot of upvotes / comments / shares / views recently")
                     }
                     it
                 }

@@ -10,7 +10,7 @@ but nowadays it doesn't contain videos anymore. This one does.
 ## Limitations
 
 You can only subscribe to:
-- `default` (which is the fresh page)
+- `default` (which is the hot page)
 - `comic`
 - `nsfw`
 - `among-us`
@@ -22,6 +22,11 @@ Also is not available so far in any public domain, so you will have to host it y
 
 You have to set the environment variable `URL` as your public url, this is used as callback in the `pubsubhubbub`
 so RSS reeders can udpate immediately once there is an update.
+
+As Cloud containers need to be stateless there is no Scheduler to update the feed, you will have to create your own `Cloud Schedulers` to:
+
+- refresh the feed: `GET your_domain/refresh`
+- delete older posts than 1 day: `GET your_domain/delete`
 
 ## Running and Building
 
@@ -81,7 +86,3 @@ and for [native](https://medium.com/@alexismp/deploying-a-quarkus-app-to-google-
 
 Once the application is running you can get the RSS feed from `your_domain/feed/[default|comic|...]`.
 
-As Cloud containers need to be stateless there is no Scheduler to update the feed, you will have to create your own `Cloud Schedulers` to:
-
-- refresh the feed: `GET your_domain/refresh`
-- delete older posts than 1 day: `GET your_domain/delete`
