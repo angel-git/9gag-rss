@@ -18,11 +18,16 @@ class FeedRepository {
 
     private val db = FirestoreOptions.getDefaultInstance().toBuilder().setProjectId("gag2-293807").setCredentials(GoogleCredentials.getApplicationDefault()).build().service!!
 
-    fun add(group: String, json: GagJson) {
+    fun add(group: String, json: GagJson): List<GagPost> {
+        val postsInserted = mutableListOf<GagPost>()
         json.data.posts.forEach {
-            val documentReference = db.collection(group).document(it.id)
-            documentReference.set(it)
+            if (db.collection(group).whereEqualTo("id", it.id).get().get().isEmpty) {
+                val documentReference = db.collection(group).document(it.id)
+                documentReference.set(it)
+                postsInserted.add(it)
+            }
         }
+        return postsInserted
     }
 
     fun read(group: String): GagJson {

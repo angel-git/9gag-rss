@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test
 class XmlSerializerTest {
 
     private val expected: String = """
-        <rss>
+        <rss version="2.0">
           <channel>
-            <title>9GAG - comic - ags</title>
+            <title>9GAG - comic - GCP</title>
             <link>https://9gag.com</link>
             <description>description comic</description>
             <pubDate>Tue, 03 Nov 2020 04:34:21 GMT</pubDate>
@@ -34,6 +34,7 @@ class XmlSerializerTest {
               <link>url2</link>
               <pubDate>Tue, 03 Nov 2020 04:02:13 GMT</pubDate>
             </item>
+            <wstxns1:link xmlns:wstxns1="http://www.w3.org/2005/Atom" rel="hub" href="https://pubsubhubbub.appspot.com/"/>
           </channel>
         </rss>"""
             .trimIndent()

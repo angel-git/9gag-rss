@@ -21,7 +21,16 @@ class GagToAtom : Function<GagJson, Rss> {
         val items: List<Item> = input.data.posts.map { GagPostToItem().apply(it) }
         val group = input.data.group!!.name
         val description = input.data.group!!.description
-        return Rss(Channel("9GAG - $group - ags", "https://9gag.com", description, item = items, pubDate = parseCreationTsToRF(input.data.posts[0].creationTs)))
+        return Rss(
+                Channel(
+                        title = "9GAG - $group - GCP",
+                        link = "https://9gag.com",
+                        description = description,
+                        item = items,
+                        atomLink = AtomLink("hub", "https://pubsubhubbub.appspot.com/"),
+                        pubDate = parseCreationTsToRF(input.data.posts[0].creationTs)
+                )
+        )
     }
 }
 

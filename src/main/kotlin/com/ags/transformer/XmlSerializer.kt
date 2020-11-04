@@ -17,7 +17,9 @@ class XmlSerializer {
             .apply { configure(MapperFeature.USE_ANNOTATIONS, true) }
 
     fun toXml(rss: Rss): String {
-        return xml.writeValueAsString(rss)
+        val xml = xml.writeValueAsString(rss)
+        // Jackson doesn't allow to have 2 elements with same name, ie: link and atom:link, so dirty hack
+        return xml.replace("atom:link", "link")
     }
 
 

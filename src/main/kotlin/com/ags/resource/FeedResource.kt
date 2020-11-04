@@ -2,7 +2,7 @@ package com.ags.resource
 
 import com.ags.domain.SupportedGroups
 import com.ags.repository.FeedRepository
-import com.ags.scheduler.JsonScheduler
+import com.ags.scheduler.ScheduledOperations
 import com.ags.transformer.GagToAtom
 import com.ags.transformer.XmlSerializer
 import javax.ws.rs.GET
@@ -12,7 +12,7 @@ import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 
 @Path("/")
-class FeedResource(val scheduler: JsonScheduler, val repository: FeedRepository) {
+class FeedResource(val scheduler: ScheduledOperations, val repository: FeedRepository, val scheduledOperations: ScheduledOperations) {
 
     private val rssToString = XmlSerializer()
     private val gagToAtom = GagToAtom()
@@ -30,6 +30,20 @@ class FeedResource(val scheduler: JsonScheduler, val repository: FeedRepository)
                 gagToAtom.apply(repository.read(group))
         )
     }
+
+    // endpoints to be called from cloud scheduler
+    @GET
+    @Path("refresh")
+    fun refresh() {
+        scheduledOperations.updateFeedsFrom9Gag()
+    }
+
+    @GET
+    @Path("delete")
+    fun delete() {
+        scheduledOperations.deleteOldData()
+    }
+
 
 
 }
