@@ -50,6 +50,14 @@ class GagPostToItem : Function<GagPost, Item> {
         """.trimIndent()
     }
 
+    private fun parseYoutube(youtubeId: String): String {
+        return """
+                <iframe id="ytplayer-${youtubeId}" type="text/html" width="640" height="360" 
+                src="https://www.youtube.com/embed/${youtubeId}?autoplay=0&modestbranding=1&enablejsapi=1" 
+                frameborder="0" scrolling="no" allow="encrypted-media"></iframe>
+                """.trimIndent()
+    }
+
     override fun apply(input: GagPost): Item {
         val description = when (input.type) {
             "Animated" -> {
@@ -77,10 +85,15 @@ class GagPostToItem : Function<GagPost, Item> {
                 parserImageTag(input.images.image700.url)
             }
             "Video" -> {
-                "Videos are not implemented yet"
+                if (input.video?.source == "YouTube") {
+                    parseYoutube(input.video!!.id)
+                } else {
+                    "This video [${input.video}] is not yet supported"
+                }
+
             }
             else -> {
-                throw IllegalStateException("Can't parse ${input.type}")
+                "This [${input.type}] is not yet supported"
             }
         }
         return Item(guid = input.id, description = description, title = input.title, link = input.url, pubDate = parseCreationTsToRF(input.creationTs))

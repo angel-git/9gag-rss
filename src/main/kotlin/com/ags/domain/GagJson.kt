@@ -22,6 +22,7 @@ data class GagPost(
         var title: String = "",
         var type: String = "", // Animated, Photo
         var images: GagJsonImages = GagJsonImages(image700 = GagJsonPhotoImage("")),
+        var video: GagVideo? = null,
         var creationTs: Long = 0,
         var createdOn: Long = Date().time
 )
@@ -48,4 +49,10 @@ data class GagJsonAnimatedImage(
 data class GagGroup(
         var name: String,
         var description: String,
+)
+
+@RegisterForReflection
+data class GagVideo(
+        var id: String = "",
+        var source: String = "",
 )

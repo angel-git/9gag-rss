@@ -79,4 +79,40 @@ class ParseJsonTest {
         Assertions.assertNotNull(gagJson.data)
     }
 
+    @Test
+    fun `it should handle unknown elements`() {
+        val jsonInput = """
+            {
+  "meta": {
+    "timestamp": 1603617768,
+    "status": "Success",
+    "sid": "9gVQ01EVjlHTUVkMMRVUzwEVJlnT31TY"
+  },
+  "data": {
+    "posts": [
+      {
+        "id": "aBmbwO2",
+        "url": "http:\/\/9gag.com\/gag\/aBmbwO2",
+        "title": "Sunday morning teasing.",
+        "description": "",
+        "type": "Unknown",
+        "nsfw": 1,
+        "upVoteCount": 0,
+        "downVoteCount": 0,
+        "creationTs": 1603617674,
+        "promoted": 0,
+        "isVoteMasked": 1,
+        "hasLongPostCover": 0,
+        "sourceDomain": "",
+        "sourceUrl": "",
+        "commentsCount": 0,
+        "tags": []
+      }
+    ]
+ }}
+        """.trimIndent()
+        val gagJson = Gson().fromJson(jsonInput, GagJson::class.java)
+        Assertions.assertNotNull(gagJson.data)
+    }
+
 }
