@@ -3,8 +3,8 @@ package com.ags.scheduler
 import com.ags.client.DongleClient
 import com.ags.client.GagClient
 import com.ags.client.PubSubClient
-import com.ags.domain.GagJson
 import com.ags.domain.donglespace.DonglespaceBettingJson
+import com.ags.domain.ninegag.GagJson
 import com.ags.domain.ninegag.SupportedGroups
 import com.ags.repository.DongleFeedRepository
 import com.ags.repository.GagFeedRepository

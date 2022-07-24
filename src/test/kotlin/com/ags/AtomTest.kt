@@ -1,7 +1,7 @@
 package com.ags
 
-import com.ags.domain.*
 import com.ags.domain.donglespace.*
+import com.ags.domain.ninegag.*
 import com.ags.transformer.dongle.DongleToAtom
 import com.ags.transformer.ninegag.GagToAtom
 import org.junit.jupiter.api.Assertions

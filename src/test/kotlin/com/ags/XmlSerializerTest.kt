@@ -1,6 +1,7 @@
 package com.ags
 
-import com.ags.domain.*
+import com.ags.domain.Rss
+import com.ags.domain.ninegag.*
 import com.ags.transformer.ninegag.GagToAtom
 import com.ags.transformer.XmlSerializer
 import org.junit.jupiter.api.Assertions

@@ -1,8 +1,8 @@
 package com.ags
 
-import com.ags.domain.GagJson
 import com.ags.domain.donglespace.DonglespaceAllCategoriesJson
 import com.ags.domain.donglespace.DonglespaceBettingJson
+import com.ags.domain.ninegag.GagJson
 import com.google.gson.Gson
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

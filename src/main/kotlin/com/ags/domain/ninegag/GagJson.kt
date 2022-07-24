@@ -1,4 +1,4 @@
-package com.ags.domain
+package com.ags.domain.ninegag
 
 import io.quarkus.runtime.annotations.RegisterForReflection
 import java.util.*

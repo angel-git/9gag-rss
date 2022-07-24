@@ -1,7 +1,7 @@
 package com.ags.client
 
-import com.ags.domain.GagGroup
-import com.ags.domain.GagJson
+import com.ags.domain.ninegag.GagGroup
+import com.ags.domain.ninegag.GagJson
 import com.ags.domain.ninegag.SupportedGroups
 import com.google.gson.Gson
 import java.net.URI

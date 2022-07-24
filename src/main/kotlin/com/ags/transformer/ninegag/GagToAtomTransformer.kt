@@ -1,6 +1,8 @@
 package com.ags.transformer.ninegag
 
 import com.ags.domain.*
+import com.ags.domain.ninegag.GagJson
+import com.ags.domain.ninegag.GagPost
 import com.ags.transformer.Function
 
 class GagToAtom : Function<GagJson, Rss>() {
