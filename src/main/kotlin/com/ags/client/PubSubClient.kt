@@ -1,6 +1,5 @@
 package com.ags.client
 
-import com.ags.domain.GagPost
 import org.eclipse.microprofile.config.inject.ConfigProperty
 import java.net.URI
 import java.net.http.HttpClient
@@ -21,7 +20,7 @@ class PubSubClient(@ConfigProperty(name = "deployed.url") private val deployedUr
             .version(HttpClient.Version.HTTP_2)
             .build()
 
-    fun notifyAppspot(group: String, posts: List<GagPost>) {
+    fun notifyAppspot(group: String, posts: List<Any>) {
         if (posts.isNotEmpty()) {
             httpClient.sendAsync(
                     HttpRequest.newBuilder()

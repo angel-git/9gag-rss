@@ -1,7 +1,8 @@
 package com.ags.resource
 
 import com.ags.domain.ninegag.SupportedGroups
-import com.ags.repository.FeedRepository
+import com.ags.repository.DongleFeedRepository
+import com.ags.repository.GagFeedRepository
 import com.ags.scheduler.ScheduledOperations
 import com.ags.transformer.XmlSerializer
 import com.ags.transformer.dongle.DongleToAtom
@@ -13,7 +14,12 @@ import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 
 @Path("/")
-class FeedResource(val scheduler: ScheduledOperations, val repository: FeedRepository, val scheduledOperations: ScheduledOperations) {
+class FeedResource(
+    val scheduler: ScheduledOperations,
+    val gagRepository: GagFeedRepository,
+    val dongleRepository: DongleFeedRepository,
+    val scheduledOperations: ScheduledOperations
+) {
 
     private val rssToString = XmlSerializer()
     private val gagToAtom = GagToAtom()
@@ -45,7 +51,7 @@ class FeedResource(val scheduler: ScheduledOperations, val repository: FeedRepos
     @GET
     @Path("refresh")
     fun refresh() {
-        scheduledOperations.updateFeedsFrom9Gag()
+        scheduledOperations.updateFeeds()
     }
 
     @GET

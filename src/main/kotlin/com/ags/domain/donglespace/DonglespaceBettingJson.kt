@@ -25,7 +25,9 @@ data class Node(
     var title: String = "",
     var post: Post,
     var createdAt: Date,
-    var createdOn: Long = Date().time
+    var createdOn: Long = Date().time,
+    // fixme: timestamp to be used on Repository.read so we can orderBy
+    var creationTs: Long = 0
 )
 @RegisterForReflection
 data class Post(
