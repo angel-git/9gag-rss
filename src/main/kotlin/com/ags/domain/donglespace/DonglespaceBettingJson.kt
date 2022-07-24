@@ -23,8 +23,8 @@ data class Nodes(
 data class Node(
     var code: String = "",
     var title: String = "",
-    var post: Post,
-    var createdAt: Date,
+    var post: Post = Post(),
+    var createdAt: Date = Date(),
     var createdOn: Long = Date().time,
     // fixme: timestamp to be used on Repository.read so we can orderBy
     var creationTs: Long = 0
