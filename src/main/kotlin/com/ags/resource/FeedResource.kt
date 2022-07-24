@@ -1,6 +1,6 @@
 package com.ags.resource
 
-import com.ags.domain.SupportedGroups
+import com.ags.domain.ninegag.SupportedGroups
 import com.ags.repository.FeedRepository
 import com.ags.scheduler.ScheduledOperations
 import com.ags.transformer.GagToAtom

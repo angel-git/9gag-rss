@@ -2,7 +2,7 @@ package com.ags.client
 
 import com.ags.domain.GagGroup
 import com.ags.domain.GagJson
-import com.ags.domain.SupportedGroups
+import com.ags.domain.ninegag.SupportedGroups
 import com.google.gson.Gson
 import org.brotli.dec.BrotliInputStream
 import java.io.ByteArrayInputStream

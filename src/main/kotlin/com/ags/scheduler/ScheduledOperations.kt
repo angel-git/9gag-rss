@@ -3,7 +3,7 @@ package com.ags.scheduler
 import com.ags.client.GagClient
 import com.ags.client.PubSubClient
 import com.ags.domain.GagJson
-import com.ags.domain.SupportedGroups
+import com.ags.domain.ninegag.SupportedGroups
 import com.ags.repository.FeedRepository
 import org.slf4j.LoggerFactory
 import javax.enterprise.context.ApplicationScoped
