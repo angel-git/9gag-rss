@@ -65,6 +65,12 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
 ```
 
+Or for a mac with arm64 (take into account you won't be able to deploy in GCP or other cloud options:
+
+```shell script
+./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:22.0.0-java11-arm64
+```
+
 You can then execute your native executable with: `./build/9gag-rss-1.0.0-SNAPSHOT-runner`
 
 ## How to deploy
