@@ -60,7 +60,7 @@ class AtomTest {
     }
 
     @Test
-    fun `should transform data classes`() {
+    fun `should transform dongle classes`() {
 
         val dongleJson = DonglespaceBettingJson(
             BettingData(
@@ -82,6 +82,39 @@ class AtomTest {
         Assertions.assertEquals(feed.channel.item[0].guid, "id1")
         Assertions.assertEquals(feed.channel.item[0].pubDate, "Thu, 01 Jan 1970 00:00:00 GMT")
         Assertions.assertTrue(feed.channel.item[0].description.contains("<p></p>"))
+    }
+
+    @Test
+    fun `should transform dongle ql-video with iframe to video`() {
+
+        val dongleJson = DonglespaceBettingJson(
+            BettingData(
+                Nodes(
+                    arrayOf
+                        (
+                        Node(
+                            code = "id1",
+                            title = "some title",
+                            post = Post(detail = "<iframe class=\"ql-video\" frameborder=\"0\" allowfullscreen=\"true\"\n" +
+                                    "        src=\"https://thumbs2.redgifs.com/FamousTartCrossbill-mobile.mp4#t=0\"></iframe>"),
+                            createdAt = Date.from(Instant.EPOCH),
+                        ),
+                        Node(
+                            code = "id1",
+                            title = "some title",
+                            post = Post(detail = "<video class=\"ql-video\" frameborder=\"0\" allowfullscreen=\"true\" src=\"https://thumbs2.redgifs.com/FamousTartCrossbill-mobile.mp4#t=0\" controls=\"\"></video>"),
+                            createdAt = Date.from(Instant.EPOCH),
+                        )
+                    )
+                )
+            )
+        )
+        val feed = DongleToAtom().apply(dongleJson)
+        Assertions.assertEquals(feed.channel.pubDate, "Thu, 01 Jan 1970 00:00:00 GMT")
+        Assertions.assertEquals(feed.channel.item[0].guid, "id1")
+        Assertions.assertEquals(feed.channel.item[0].pubDate, "Thu, 01 Jan 1970 00:00:00 GMT")
+        Assertions.assertEquals(feed.channel.item[0].description, "<video class=\"ql-video\" frameborder=\"0\" allowfullscreen=\"true\" src=\"https://thumbs2.redgifs.com/FamousTartCrossbill-mobile.mp4#t=0\"></video>")
+        Assertions.assertEquals(feed.channel.item[1].description, "<video class=\"ql-video\" frameborder=\"0\" allowfullscreen=\"true\" src=\"https://thumbs2.redgifs.com/FamousTartCrossbill-mobile.mp4#t=0\" controls=\"\"></video>")
     }
 
 }

@@ -28,11 +28,20 @@ class DongleNodeToItem : Function<Node, Item>() {
     override fun apply(input: Node): Item {
         return Item(
             guid = input.code,
-            description = input.post.detail,
+            description = parserDetail(input.post.detail),
             title = input.title,
             link = input.code,
             pubDate = parseCreationTsToRF(input.creationTs)
         )
+    }
+
+    private fun parserDetail(detail: String): String {
+        return if (detail.startsWith("<iframe")) {
+            val source = """src="(.*)"""".toRegex().find(detail)!!
+            """<video class="ql-video" frameborder="0" allowfullscreen="true" src="${source.groups[1]?.value}"></video>"""
+        } else {
+            detail
+        }
     }
 }
 
