@@ -8,13 +8,14 @@ import com.google.cloud.firestore.Query
 import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
-class DongleFeedRepository : Repository<DonglespaceBettingJson, Node>() {
+class DongleFeedRepository {
 
-    override fun add(id: String, json: DonglespaceBettingJson): List<Node> {
+    private val repository: Repository = Repository()
+    fun add(id: String, json: DonglespaceBettingJson): List<Node> {
         val postsInserted = mutableListOf<Node>()
         json.data.bettings.nodes.forEach {
-            if (db.collection(id).whereEqualTo("id", it.code).get().get().isEmpty) {
-                val documentReference = db.collection(id).document(it.code)
+            if (repository.db.collection(id).whereEqualTo("id", it.code).get().get().isEmpty) {
+                val documentReference = repository.db.collection(id).document(it.code)
                 it.creationTs = it.createdAt.time
                 documentReference.set(it)
                 postsInserted.add(it)
@@ -23,10 +24,16 @@ class DongleFeedRepository : Repository<DonglespaceBettingJson, Node>() {
         return postsInserted
     }
 
-    override fun read(id: String): DonglespaceBettingJson {
-        val querySnapshot = db.collection(id).orderBy("creationTs", Query.Direction.DESCENDING).get().get().documents
+    fun read(id: String): DonglespaceBettingJson {
+        val querySnapshot =
+            repository.db.collection(id).orderBy("creationTs", Query.Direction.DESCENDING).get().get().documents
         val posts = querySnapshot.map { it.toObject(Node::class.java) }.toTypedArray()
         return DonglespaceBettingJson(BettingData(Nodes(posts)))
+    }
+
+    fun deleteDayOldPosts() {
+        repository.deleteDayOldPosts()
+
     }
 
 }

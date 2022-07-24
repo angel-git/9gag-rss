@@ -8,13 +8,15 @@ import com.google.cloud.firestore.Query
 import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
-class GagFeedRepository : Repository<GagJson, GagPost>() {
+class GagFeedRepository {
 
-    override fun add(id: String, json: GagJson): List<GagPost> {
+    private val repository: Repository = Repository()
+
+    fun add(id: String, json: GagJson): List<GagPost> {
         val postsInserted = mutableListOf<GagPost>()
         json.data.posts.forEach {
-            if (db.collection(id).whereEqualTo("id", it.id).get().get().isEmpty) {
-                val documentReference = db.collection(id).document(it.id)
+            if (repository.db.collection(id).whereEqualTo("id", it.id).get().get().isEmpty) {
+                val documentReference = repository.db.collection(id).document(it.id)
                 documentReference.set(it)
                 postsInserted.add(it)
             }
@@ -22,10 +24,15 @@ class GagFeedRepository : Repository<GagJson, GagPost>() {
         return postsInserted
     }
 
-    override fun read(id: String): GagJson {
-        val querySnapshot = db.collection(id).orderBy("creationTs", Query.Direction.DESCENDING).get().get().documents
+    fun read(id: String): GagJson {
+        val querySnapshot =
+            repository.db.collection(id).orderBy("creationTs", Query.Direction.DESCENDING).get().get().documents
         val posts = querySnapshot.map { it.toObject(GagPost::class.java) }.toTypedArray()
         return GagJson(GagData(posts, GagGroup(id, "fake description")))
+    }
+
+    fun deleteDayOldPosts() {
+        repository.deleteDayOldPosts()
     }
 
 }

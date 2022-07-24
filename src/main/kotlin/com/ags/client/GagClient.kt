@@ -12,12 +12,14 @@ import javax.enterprise.context.ApplicationScoped
 
 
 @ApplicationScoped
-class GagClient: Client<GagJson>() {
+class GagClient {
+
+    private val client: Client = Client()
 
     private fun url(group: String) = "https://9gag.com/v1/group-posts/group/$group/type/hot"
 
-    override fun getJson(group: String): CompletableFuture<GagJson>? {
-        return httpClient.sendAsync(
+    fun getJson(group: String): CompletableFuture<GagJson>? {
+        return client.httpClient.sendAsync(
                 HttpRequest.newBuilder().GET().uri(URI.create(url(group)))
                         .header("Cookie", "__cfduid=d4c4bfc44826d9a80c77561e5428abc591603692951; ____ri=4775; ____lo=NL")
                         .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
@@ -26,7 +28,7 @@ class GagClient: Client<GagJson>() {
                         .header("Accept-Encoding", "gzip, deflate, br")
                         .build(),
                 HttpResponse.BodyHandlers.ofByteArray())
-                .thenApply { decompress(it.body(), false) }
+                .thenApply { client.decompress(it.body(), false) }
                 .thenApply { String(it) }
                 .thenApply { Gson().fromJson(it, GagJson::class.java) } // can't use kotlinx.serialization.json.Json in native
                 .thenApply {

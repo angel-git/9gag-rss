@@ -5,17 +5,14 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.net.http.HttpClient
-import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-abstract class Client<T> {
-
-    abstract fun getJson(group: String): CompletableFuture<T>?
+class Client {
 
     private val executor: ExecutorService = Executors.newFixedThreadPool(5)
 
-    protected val httpClient: HttpClient = HttpClient
+    val httpClient: HttpClient = HttpClient
         .newBuilder()
         .executor(executor)
         .version(HttpClient.Version.HTTP_2)

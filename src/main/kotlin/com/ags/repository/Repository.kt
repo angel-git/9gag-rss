@@ -5,12 +5,13 @@ import com.google.cloud.firestore.FirestoreOptions
 import org.slf4j.LoggerFactory
 import java.util.*
 
-abstract class Repository<Req, Res> {
+class Repository {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    protected val db = FirestoreOptions.getDefaultInstance().toBuilder().setProjectId("gag2-293807").setCredentials(
-        GoogleCredentials.getApplicationDefault()).build().service!!
+    val db = FirestoreOptions.getDefaultInstance().toBuilder().setProjectId("gag2-293807").setCredentials(
+        GoogleCredentials.getApplicationDefault()
+    ).build().service!!
 
     fun deleteDayOldPosts() {
         val dayMs = 86400000
@@ -22,8 +23,4 @@ abstract class Repository<Req, Res> {
             }
         }
     }
-
-    abstract fun add(id: String, json: Req): List<Res>
-
-    abstract fun read(id: String): Req
 }
